@@ -20,8 +20,8 @@ navigator.geolocation.getCurrentPosition(
     console.log(latitude, longitude);
 
     console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
-    const coords = [latitude , longitude]
-                                        ///ZOOM initial 
+    const coords = [latitude, longitude];
+    ///  <div id="map"></div>  ///ZOOM initial
     const map = L.map('map').setView(coords, 13);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -29,11 +29,22 @@ navigator.geolocation.getCurrentPosition(
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    L.marker(coords)
+    
+    ///this is leaf inbuilt function  to find in the xact location in the map u cant just another addeventlistener then u cant get the whole location of the map 
+    map.on('click' , function(mapEvent){
+      console.log(mapEvent);
+
+      const {lat , lng} = mapEvent.latlng ; 
+
+      L.marker([lat , lng])
       .addTo(map)
-      .bindPopup('A pretty CSS popup.<br> Easily customizable.')
+      .bindPopup('Clicked')
       .openPopup();
+
+    })  
+
   },
+
   function () {
     alert('Could not get the position');
   }
